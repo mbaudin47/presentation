@@ -1,13 +1,7 @@
 
 \documentclass[aspectratio=169]{beamer}
 
-%\setbeameroption{hide notes}
-%\setbeameroption{show notes}
-%\setbeameroption{show only notes}
-
-  \include{macros}
-\usepackage{adjustbox}
-\usepackage[normalem]{ulem}
+\input{macros}
 
 \title[OpenTURNS]{OpenTURNS release highlights}
 
@@ -15,49 +9,27 @@
 
 \date[]{User Day \#18, June 13th 2025, EDF Lab}
 
+
+\titlegraphic{
+  \includegraphics[height=0.04\textheight]{figures/airbus-logo-3d-blue.png} \hfill
+  \includegraphics[height=0.09\textheight]{figures/logo-edf.png} \hfill
+  \includegraphics[height=0.09\textheight]{figures/imacs-logo.jpg} \hfill
+  \includegraphics[height=0.05\textheight]{figures/onera-logo.png} \hfill
+  \includegraphics[height=0.08\textheight]{figures/logo-phimeca.png}
+  }
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \begin{document}
+\begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \begin{frame}
+\begin{frame}
   \titlepage
 
-  \begin{columns}
-  \begin{column}[t]{0.05\textwidth}
-        \end{column}
-  
-    \column{0.10\textwidth}
-  \begin{center}
-\includegraphics[height=0.04\textheight]{figures/airbus-logo-3d-blue.png}
-\end{center}
+\end{frame}
 
-    \column{0.05\textwidth}
-  \begin{center}
-\includegraphics[height=0.09\textheight]{figures/logo-edf.jpg}
-\end{center}
-
-     \column{0.05\textwidth}
-  \begin{center}
-\includegraphics[height=0.09\textheight]{figures/imacs-logo.jpg}
-\end{center}
-
-    \column{0.10\textwidth}
-  \begin{center}
-\includegraphics[height=0.05\textheight]{figures/onera-logo.png}
-\end{center}
-
-    \column{0.15\textwidth}
-  \begin{center}
-\includegraphics[height=0.08\textheight]{figures/logo-phimeca.png}
-\end{center}
-
-\column{0.01\textwidth}
-
-  \end{columns}
-
-  \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}
 \frametitle{Overview}
@@ -97,7 +69,9 @@ New features since last year in releases:
 \begin{frame}
 \frametitle{LOLA-Voronoi sequential design 1/7}
 
-Crombecq, K., \textit{Surrogate Modelling of Computer Experiments with Sequential Experimental Design}, PhD thesis, Universiteit Gent, Belgium, 2011.
+Based on (Crombecq, 2011)'s LOLA-Voronoi design\footnote{
+See Crombecq, K., \textit{Surrogate Modelling of Computer Experiments with Sequential Experimental Design}, PhD thesis, Universiteit Gent, Belgium, 2011.
+}.
 
 \begin{itemize}
 \item Exploration criterion based on Voronoi cell volume:
@@ -114,7 +88,7 @@ Crombecq, K., \textit{Surrogate Modelling of Computer Experiments with Sequentia
 \frametitle{LOLA-Voronoi sequential design 2/7}
 
 \begin{figure}
-   \includegraphics[width=1.04\textwidth]{figures/lolavoronoi_1}
+   \includegraphics[width=1.0\textwidth]{figures/lolavoronoi_1}
 \end{figure}
 
 \end{frame}
@@ -125,7 +99,7 @@ Crombecq, K., \textit{Surrogate Modelling of Computer Experiments with Sequentia
 \frametitle{LOLA-Voronoi sequential design 3/7}
 
 \begin{figure}
-   \includegraphics[width=1.04\textwidth]{figures/lolavoronoi_2}
+   \includegraphics[width=1.0\textwidth]{figures/lolavoronoi_2}
 \end{figure}
 
 \end{frame}
@@ -136,7 +110,7 @@ Crombecq, K., \textit{Surrogate Modelling of Computer Experiments with Sequentia
 \frametitle{LOLA-Voronoi sequential design 4/7}
 
 \begin{figure}
-   \includegraphics[width=1.04\textwidth]{figures/lolavoronoi_3}
+   \includegraphics[width=1.0\textwidth]{figures/lolavoronoi_3}
 \end{figure}
 
 \end{frame}
@@ -147,7 +121,7 @@ Crombecq, K., \textit{Surrogate Modelling of Computer Experiments with Sequentia
 \frametitle{LOLA-Voronoi sequential design 5/7}
 
 \begin{figure}
-   \includegraphics[width=1.04\textwidth]{figures/lolavoronoi_4}
+   \includegraphics[width=1.0\textwidth]{figures/lolavoronoi_4}
 \end{figure}
 
 \end{frame}
@@ -159,7 +133,7 @@ Crombecq, K., \textit{Surrogate Modelling of Computer Experiments with Sequentia
 \frametitle{LOLA-Voronoi sequential design 6/7}
 
 \begin{figure}
-   \includegraphics[width=1.04\textwidth]{figures/lolavoronoi_5}
+   \includegraphics[width=1.0\textwidth]{figures/lolavoronoi_5}
 \end{figure}
 
 \end{frame}
@@ -175,7 +149,8 @@ Crombecq, K., \textit{Surrogate Modelling of Computer Experiments with Sequentia
 # 1. initial design
 distribution = ot.JointDistribution([ot.Uniform(-1.0, 1.0)] * 2)
 N = 50
-x0 = ot.LowDiscrepancyExperiment(ot.HaltonSequence(), distribution, N).generate()
+design = ot.LowDiscrepancyExperiment(ot.HaltonSequence(), distribution, N)
+x0 = design.generate()
 y0 = f1(x0)
 
 # 2. sequential experiment
@@ -215,10 +190,10 @@ metamodel = algo_mm.getResult().getMetaModel()
 \lstset{language=python}
 \begin{lstlisting}
 import openturns.experimental as otexp
+
 estimated = otexp.SmoothedUniformFactory().build(sample)
 \end{lstlisting}
 \end{small}
-
 
 \end{frame}
 
@@ -227,18 +202,21 @@ estimated = otexp.SmoothedUniformFactory().build(sample)
 \begin{frame}[containsverbatim]
 \frametitle{Latent variable model}
 
+Adapted from (Zhang et al., 2020)\footnote{See Zhang, Y., Tao, S., Chen, W., 
+\& Apley, D. W. (2020). \emph{A latent variable approach to Gaussian process modeling 
+with qualitative and quantitative factors.} Technometrics, 62(3), 291-302.}
 \begin{itemize}
 \item Covariance model, for eg Kriging
 \item Covariance between different unordered values (or levels) of a categorical variable
 \item Parameters: coordinates in the latent space
-\item Zhang2020: "A latent variable approach to Gaussian process modeling with qualitative and quantitative factors"
 \end{itemize}
 
 \vspace{30pt}
 
 \begin{small}
-\begin{lstlisting}
+\begin{lstlisting}[language=Python]
 import openturns.experimental as otexp
+
 covModel = otexp.LatentVariableModel(3, 2)
 activeCoordinates = [0.1, 0.3, -0.4]
 covModel.setLatentVariables(activeCoordinates)
@@ -254,7 +232,7 @@ covModel.setLatentVariables(activeCoordinates)
 \begin{frame}[containsverbatim]
 \frametitle{New Field metamodeling capabilities}
 \begin{itemize}
-\item Vector to field metamodeling and sensitivity using KL + chaos
+\item Vector to field metamodeling and sensitivity using KL + PCE
 \end{itemize}
 
 % \begin{figure}
@@ -264,7 +242,7 @@ covModel.setLatentVariables(activeCoordinates)
 % \end{figure}
 
 \begin{small}
-\begin{lstlisting}
+\begin{lstlisting}[language=Python]
 # metamodel
 algo = otexp.PointToFieldFunctionalChaosAlgorithm(X, Y, distribution)
 algo.run(); result = algo.getResult()
@@ -292,7 +270,9 @@ st = sensitivity.getTotalOrderIndices()
 \begin{itemize}
 \item Data-driven (no need for dedicated design of experiments, just iid design)
 \item Only first-order indices
-\item Gamboa2022: "Global sensitivity analysis: A novel generation of mighty estimators based on rank statistics"
+\item See (Gamboa et al., 2022)\footnote{Gamboa, F., Gremaud, P., Klein, T., \& 
+Lagnoux, A. (2022). \emph{Global sensitivity analysis: A novel generation of mighty 
+estimators based on rank statistics.} Bernoulli, 28(4), 2345-2374.}
 \end{itemize}
 
 % \begin{figure}
@@ -300,9 +280,9 @@ st = sensitivity.getTotalOrderIndices()
 % \end{figure}
 
 \begin{small}
-\begin{lstlisting}
+\begin{lstlisting}[language=Python]
 X = distributionX.getSample(N)
-Y = f(X)
+Y = g(X)
 algo = otexp.RankSobolSensitivityAlgorithm(X, Y)
 s1 = algo.getFirstOrderIndices()
 \end{lstlisting}
@@ -317,8 +297,9 @@ s1 = algo.getFirstOrderIndices()
 \begin{frame}
 \frametitle{Documentation improvements}
 \begin{itemize}
-\item Lots of new examples: chaos, cv, regression, MLE, functions, integration, enumerate, ...
-\item New usecases: fire satellite, wing weight, Linthurst/Coles datasets
+\item Lots of new examples: PCE, cross-validation, regression, MLE, functions, 
+integration, enumerate, ...
+\item New use cases: fire satellite, wing weight, Linthurst/Coles datasets
 \end{itemize}
 
 % \begin{center}
@@ -326,7 +307,7 @@ s1 = algo.getFirstOrderIndices()
 % \end{center}
 
 \begin{itemize}
-\item Example minigalleries linking to relevant examples
+\item Example mini galleries linking to relevant examples
 \item Automatic checking of every internal links
 \item Lot of time invested in the improvement of the documentation
 \end{itemize}
@@ -334,13 +315,18 @@ s1 = algo.getFirstOrderIndices()
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Other improvements}
 \begin{itemize}
-\item Multidimensional integration using cuba library (CubaIntegration)
-\item New class for integration from an existing design of experiment (ExperimentIntegration)
-\item Faster KDTree implementation using nanoflann library
-\item Faster TruncatedDistribution with n-d CDF inversion
+\item Multidimensional integration using Cuba library\footnote{See 
+Hahn, T. (2005). \emph{Cuba—a library for multidimensional numerical integration.} 
+Computer Physics Communications, 168(2), 78-95.} (\pyvar{CubaIntegration})
+\item New class for integration from an existing design of experiment 
+(\pyvar{ExperimentIntegration}): also, compute the L2 norm of a function 
+(useful for validation of a metamodel).
+\item Faster \pyvar{KDTree} implementation using Nanoflann library\footnote{See 
+\url{https://github.com/jlblancoc/nanoflann}.}
+\item Faster \pyvar{TruncatedDistribution} with n-d CDF inversion
 \end{itemize}
 
 \vspace{6pt}
@@ -348,6 +334,18 @@ s1 = algo.getFirstOrderIndices()
 % \begin{center}
 % \includegraphics[width=0.15\textwidth]{figures/bugfix}
 % \end{center}
+
+\begin{lstlisting}[language=Python]
+import openturns as ot
+import openturns.experimental as otexp
+from openturns.usecases import ishigami_function
+
+im = ishigami_function.IshigamiModel()
+sampleSize = 32768
+experiment = ot.MonteCarloExperiment(im.inputDistribution, sampleSize)
+integration = otexp.ExperimentIntegration(experiment)
+approximatedOutputMean = integration.integrate(im.model)
+\end{lstlisting}
 
 \end{frame}
 
@@ -408,12 +406,11 @@ s1 = algo.getFirstOrderIndices()
 \frametitle{Outlook}
 \begin{block}{2025-2026 work}
 \begin{itemize}
+\item \textbf{New GPR API}
 \item Conditional distributions / Bayesian
-\item Quantiles estimation / tolerance intervals
 \item Calibration (functional models, bound constraints)
-\item New GPR API
 \item LOLA-Voronoi sequential design
-\item Cross-validation of functional chaos expansion
+\item Model selection of functional chaos expansion (e.g. LARS)
 \end{itemize}
 \end{block}
 \end{frame}
