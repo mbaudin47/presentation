@@ -98,6 +98,10 @@ OpenTURNS Presentations
   - `Sensitivity analyses of a multi-physics long-term clogging model for steam generators <https://github.com/openturns/openturns.github.io/blob/master/presentation/master/JU_OpenTURNS_17_2024_VincentCHABRIDON.pdf>`_
   - `Benchmark of integrated solutions for uncertainty quantification <https://github.com/openturns/openturns.github.io/blob/master/presentation/master/JU_OpenTURNS_17_2024_BaptisteKERLEGUER.pdf>`_
 
+- User day 2025
+
+  - `OpenTURNS Release highlights <https://github.com/openturns/openturns.github.io/blob/master/presentation/master/userday2025relhi.pdf>`_
+
 - Uncecomp 2023
 
   - `Slides <https://github.com/openturns/openturns.github.io/blob/master/presentation/master/uncecomp_2023_slides_OpenTURNS.pdf>`_
